@@ -37,9 +37,8 @@ public class Shaderfx implements ModInitializer {
 
         ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("shaderfx_utils.glsl"));
         ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("spikes.glsl"));
-        ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("fractal1.glsl"));
-        ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("fractal2.glsl"));
         ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("endfx.glsl"));
+        ShaderEffects.addImport(ResourceLocation.withDefaultNamespace("realmfx.glsl"));
 
         ServerLifecycleEvents.SERVER_STARTING.register(server -> ADVENTURE = FabricServerAudiences.of(server));
 

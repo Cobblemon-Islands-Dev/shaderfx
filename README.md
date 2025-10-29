@@ -14,6 +14,8 @@ Animated emoji format:
 - Green channel: frames per second
 - Blue channel: height per frame
 
+Animated emoji are automatically "converted" to the animated format by naming the file `<name>_animoji<fps>.png`, for example `blink_animoji5.png` will play at 5 FPS
+
 # Commands
 
 `/shaderfx run <effect id> <target player> <hex color> <fade-in-ticks> <stay-for-ticks> <fade-out-ticks>`
@@ -31,6 +33,38 @@ For example the builtin image-based transition fonts:
 
 THe built-in image-based transitions can also be shown with shaderfx:transition:
 `/shaderfx:transition run shaderfx:transition-mechadoor @s 000000 10 20 10`
+
+# Config
+
+```json
+{
+  "add-assets": true,
+  "enable-animated-emoji-conversion": true,
+  "mark-as-required": true,
+  "effect-textures": [
+    {
+      "path": "assets/shaderfx/textures/font/custom/fractal.png",
+      "effect": "shaderfx:end",
+      "size": {
+        "x": 40,
+        "y": 9
+      }
+    }
+  ],
+  "join-effect": {
+    "enabled": true,
+    "type": "transition",
+    "effect": "shaderfx:transition-enclosing-triangles",
+    "color": 0,
+    "stay": 15,
+    "fade-out": 20
+  }
+}
+```
+
+`effect-textures` can be used to reference textures in your polymer managed resource-pack.
+
+the join-effect type can be "transition" or empty/set to "none", "transition" will use the effect under the `/shaderfx:transition run` command.
 
 # API
 

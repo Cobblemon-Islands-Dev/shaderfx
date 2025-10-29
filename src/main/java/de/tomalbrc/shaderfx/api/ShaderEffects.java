@@ -75,11 +75,19 @@ public class ShaderEffects {
     public static final ShaderEffect FADE = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "fade"), "color = vec4(vertexColor.rgb, vertexColor.a);");
     public static final ShaderEffect DIRECTIONAL_GRID = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "directional_grid"), loadSnippet("dir_grid_impl.glsl"));
     public static final ShaderEffect NOISE_GRID = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "noise_grid"), "ivec2 grid = ivec2(gl_FragCoord.xy / 32) * 32; color = (abs(hash(grid.x ^ hash(grid.y)) % 0x100) + 10 < int(vertexColor.a * (length(grid / ScreenSize.xy - 0.5) * 2 + 1) * 0x100)) ? vec4(vertexColor.rgb, 1) : vec4(0);");
-    public static final ShaderEffect FRACTAL1 = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "fractal1"), "color = fractal1();");
-    public static final ShaderEffect FRACTAL2 = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "fractal2"), "color = fractal2();");
     public static final ShaderEffect SPIKE = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "spike"), "color = spikes(vertexColor, centerUV, 0.09);");
     public static final ShaderEffect VIGNETTE = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "vignette"), "color = vec4(vertexColor.rgb, clamp(length(centerUV * vec2(0.8, 0.5 / (1 - vertexColor.a))) - 0.6, 0, 1));");
-    public static final ShaderEffect IMAGE_TRANSITION = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "image_transition"), "float mask = texture(Sampler0, centerUV-0.5*vec2(1,-1)).r; color = vec4(vertexColor.rgb, step(mask, vertexColor.a));", false);
+    public static final ShaderEffect IMAGE_TRANSITION = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "image_transition"), """
+            vec2 uv = gl_FragCoord.xy / ScreenSize.xy;
+            uv = uv * 2.0 - 1.0;
+            float mask = texture(Sampler0, uv).r;
+            color = vec4(vertexColor.rgb, step(mask, vertexColor.a));
+            """, false);
+
+    public static final ShaderEffect REALM_SUN = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "realm_sun"), "color = realmfx_sun(vertexColor.a+0.1,centerUV.xy);");
+    public static final ShaderEffect REALM_MOON = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "realm_moon"), "color = realmfx_moon(vertexColor.a+0.1,centerUV.xy);");
+    public static final ShaderEffect REALM_STAR = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "realm_star"), "color = realmfx_star(vertexColor.a+0.1,centerUV.xy);");
+    public static final ShaderEffect REALM_COMET = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "realm_comet"), "color = realmfx_comet(vertexColor.a+0.1,centerUV.xy);");
 
     public static final ShaderEffect END = ShaderEffects.register(ResourceLocation.fromNamespaceAndPath(MODID, "end"), """
             vec2 fragCoord = gl_FragCoord.xy;
